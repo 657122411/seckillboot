@@ -39,4 +39,14 @@ public class LoginController {
         userService.login(response, loginVo);
         return Result.success(true);
     }
+
+    //生成token记录压测
+    @RequestMapping("/do_login_string")
+    @ResponseBody
+    public Result<String> doLoginWithToken(HttpServletResponse response, @Valid LoginVo loginVo) {
+        log.info(loginVo.toString());
+        //登录
+        String token = userService.loginWithToken(response, loginVo);
+        return Result.success(token);
+    }
 }
