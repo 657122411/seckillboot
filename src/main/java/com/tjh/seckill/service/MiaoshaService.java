@@ -16,10 +16,12 @@ public class MiaoshaService {
     @Autowired
     OrderService orderService;
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public OrderInfo miaosha(MiaoshaUser user, GoodsVo goods) {
         //减库存 下订单 写入秒杀订单
+        System.out.println("in:" + user.getId());
         goodsService.reduceStock(goods);
+        System.out.println(user.getId());
         //order_info maiosha_order
         return orderService.createOrder(user, goods);
     }
